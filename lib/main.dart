@@ -112,26 +112,48 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> ivivaDetails(BuildContext context) async {
     var client = OAuth2Client(
-      authorizeUrl: "https://mobile.v4.iviva.cloud/oauth2/auth",
-      tokenUrl: "https://mobile.v4.iviva.cloud/oauth2/token",
+      authorizeUrl: "http://lucy1.iviva.com:5000/oauth2/auth",
+      tokenUrl: "http://lucy1.iviva.com:5000/oauth2/token",
       redirectUri: "com.example.oauthiviva://oauth2redirect",
       customUriScheme: "com.example.oauthiviva",
     );
 
     var tknResp = await client.getTokenWithAuthCodeFlow(
-      clientId: "beb89a31b3ad85e77b5f5dfb47282c1d631df3b3cac1e3de",
+      clientId: "e165fbcdb685693c004631e1205a178dfb812a68441da24c",
       clientSecret:
-          "a04074be51be3935f48ab6023edca976871a3690fb9afe694208f1ff297b90fdd4bc917238c696bc262807bd722adf87",
+          "3d92e7e4fecb303d20fc642767d9bfc7c59a15538096efdf366fb3b3b2b35bc3c3af8f249d843e3516f4c023f5ef2522",
       scopes: ["user:read"],
     );
+
+    // var client = OAuth2Client(
+    //   authorizeUrl: "https://mobile.v4.iviva.cloud/oauth2/auth",
+    //   tokenUrl: "https://mobile.v4.iviva.cloud/oauth2/token",
+    //   redirectUri: "com.example.oauthiviva://oauth2redirect",
+    //   customUriScheme: "com.example.oauthiviva",
+    // );
+
+    // var x = "beb89a31b3ad85e77b5f5dfb47282c1d631df3b3cac1e3de";
+    // var y =
+    //     "a04074be51be3935f48ab6023edca976871a3690fb9afe694208f1ff297b90fdd4bc917238c696bc262807bd722adf87";
+
+    // var tknResp = await client.getTokenWithAuthCodeFlow(
+    //   accessTokenParams: {
+    //     "client_id": x,
+    //     "client_secret": y,
+    //   },
+    //   clientId: x,
+    //   clientSecret: y,
+    //   scopes: ["user:read"],
+    // );
 
     String? token = tknResp.accessToken;
 
     var httpClient = http.Client();
     try {
-      var response = await httpClient.get(
-          Uri.parse("https://api.github.com/user"),
-          headers: {"Authorization": "token ${token ?? ""}"});
+      var response = await httpClient.get(Uri.parse(
+              //"https://mobile.v4.iviva.cloud/Lucy/oauth_test/user_details"),
+              "http://lucy1.iviva.com:5000/Lucy/test/user_details"),
+          headers: {"Authorization": "Bearer ${token ?? ""}"});
       log(response.body);
       if (response.statusCode == 200) {
         if (!mounted) return;
