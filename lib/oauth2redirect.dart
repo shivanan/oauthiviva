@@ -13,7 +13,7 @@ class _OAuthScreenState extends State<OAuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Github user"),
+          title: const Text("Lucy API Result"),
         ),
         body: SafeArea(child: Text(widget.details)));
   }
